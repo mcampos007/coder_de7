@@ -1,0 +1,94 @@
+<div class="main main-raised">
+    
+    <h2 class="title">{{ title }}</h2>
+    <div class="container">
+        
+        {{#if user.name}}
+        <div class="alert alert-info">
+            <div class="container-fluid">
+                <div class="alert-icon">
+                    <i class="material-icons">info_outline</i>
+                </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                </button>
+                <b>Bienvenido:</b> {{user.name}} Tu rol es {{user.role}}
+            </div>
+        </div>
+        {{/if}}
+        <button class="btn btn-primary btn-round" id="logoutButton">Logout</button>
+        <button class="btn btn-primary btn-round" id="profileButton">Profile</button>
+
+
+        <div class="section text-center">
+            <h2 class="title">{{title}}</h2>
+            <div class="card-body">
+                <div class="card-body">
+                    {{!-- <a href="/productshomemg" class="btn btn-info">volver</a> --}}
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>code</th>
+                            <th>price</th>
+                            <th>status</th>
+                            <th>stock</th>
+                            <th>category</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    {{#each products.docs}}
+                    <tr>
+                        <td class="text-center">{{_id}}</td>
+                        <td>{{title}}</td>
+                        <td>{{this.description}}</td>
+                        <td>{{this.code}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.status}}</td>
+                        <td>{{this.stock}}</td>
+                        <td>{{this.category}}</td>
+
+                        <td class="td-actions text-right">
+                            <a href="#" type="button" rel="tooltip" title="Add to Cart " class="btn btn-info btn-simple btn-xs">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button type="button" rel="tooltip" title="Edit Product" class="btn btn-success btn-simple btn-xs">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+            {{#if products.prevPage}}
+                <button> <a href="/products?page={{products.prevPage}}">Anterior</a></button>
+            {{/if}}
+            {{#if products.nextPage}}
+                <button> <a href="/products?page={{products.nextPage}}">Siguiente</a></button>
+            {{/if}}
+
+              <!-- Mostrar información de paginación 
+                <p>Total Products: {{products.totalDocs}}</p>
+                <p>Page: {{page}} / {{products.totalPages}}</p>
+                <p>Limit per page: {{products.limit}}</p>-->
+        </div>
+    </div>
+ 
+</div>
+
+<script>
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        // Redirige a la ruta /logout
+        window.location.href = '/logout';
+    });
+    document.getElementById('profileButton').addEventListener('click', function() {
+        // Redirige a la ruta /profile
+        window.location.href = '/profile';
+    });
+</script>

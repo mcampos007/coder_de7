@@ -1,0 +1,80 @@
+<nav class="navbar navbar-transparent navbar-absolute">
+    	<div class="container">
+        	{{> socialLinks}}
+    	</div>
+</nav>
+
+<div class="wrapper">
+	<div class="header header-filter" style="background-image: url('../assets/img/city.jpg'); background-size: cover; background-position: top center;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+					<div class="card card-signup">
+						 <button class="btn btn-primary btn-round" id="logoutButton">Logout</button>
+						<form class="form" method="POST" action="/api/users/">
+ 							<div class="header header-primary text-center">
+								<h4>Profile</h4>
+{{!-- 								<div class="social-line">
+									<a href="#loginfacebook" class="btn btn-simple btn-just-icon">
+										<i class="fa fa-facebook-square"></i>
+									</a>
+									<a href="#logitwitter" class="btn btn-simple btn-just-icon">
+										<i class="fa fa-twitter"></i>
+									</a>
+									<a href="#logingoole" class="btn btn-simple btn-just-icon">
+										<i class="fa fa-google-plus"></i>
+									</a>
+								</div> --}}
+							</div>
+							{{!-- <p class="text-divider">Or Be Classical</p> --}}
+							<div class="content">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="material-icons">face</i>
+									</span>
+									<input type="text" class="form-control" placeholder="First Name..." name="first_name" value="{{user.name}}" readonly>
+								</div>
+								
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="material-icons">email</i>
+									</span>
+									<input type="text" class="form-control" placeholder="Email..." name="email" value="{{user.email}}" readonly>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="material-icons">filter_3</i>
+									</span>
+									<input type="text" class="form-control" placeholder="Age..." name="age" value="{{user.age}}" readonly>
+								</div>
+								
+								
+								<!-- If you want to add a checkbox to this form, uncomment this code -->
+
+{{!-- 								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="optionsCheckboxes" checked>
+										Remember username
+									</label>
+								</div> --}}
+							</div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	{{> footer}}
+
+	</div>
+
+</div>
+<script>
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        // Redirige a la ruta /logout
+        window.location.href = '/logout';
+    });
+
+    
+</script>
