@@ -3,32 +3,37 @@ import  {Schema, model} from "mongoose";
 const userCollection = "users";
 
 const userSchema = new Schema({
-  first_name: {
+    first_name: {
     type: String,
     required: true
-  },
-  last_name: {
-      type: String,
-      required: false
-  },
-  email: {
-      type: String,
-      required: true,
-      unique: true
-  },
-  age: {
-      type: Number,
-      required: true
-  },
-  password: {
-      type: String,
-      required: false
-  },
-  loggedBy: {
+    },
+    last_name: {
+        type: String,
+        required: false
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    age: {
+        type: Number,
+        required: true
+    },
+    password: {
+        type: String,
+        required: false
+    },
+    loggedBy: {
     type: String,
-    required: false
-}
-
+    required: false,
+    },
+    role: {
+        type: String,
+        enum: ["user", "premium", "admin"],
+        default: "user", // Valor por defecto "user"
+        required: true
+    }
 });
 
 userSchema.pre('find', function(){

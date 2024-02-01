@@ -68,7 +68,7 @@ router.get('/', (req, res) => {
 }); */
 
 
-router.get('/profile',  authToken, (req, res) => {
+router.get('/profile',  passport.authenticate('jwt', {session: false}), (req, res) => {
    // console.log("datos de la session");
    // console.log(req.session.user);
    // if (!req.session.user){
@@ -82,7 +82,7 @@ router.get('/profile',  authToken, (req, res) => {
     } */
    /*  if (req.session.user){ */
         res.render('profile', {
-        user:req.session.user
+        user:req.user
         })
 });
 
@@ -113,7 +113,7 @@ router.get('/register', (req, res) => {
     )
 });
 
-//Ejmplo de llamado a la ruta get para productos
+//Ejmplo de llamado a la ruta get para productos con jwt
 router.get('/products',  passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
         const parametros  = {};
@@ -140,6 +140,32 @@ router.get('/products',  passport.authenticate('jwt', {session: false}), async (
     }
 
 });
+
+//Ejmplo de llamado a la ruta get para productos con github
+router.get('/ghproducts', async (req, res) => {
+    try {
+        const parametros = req.query;
+        
+        console.log(req.session.user.name);
+        
+      const products = await productsDao.getAllProducts(parametros);
+      
+       
+       
+       res.render('products/index', {
+        title:"Product List",
+        products,
+        bodyClass: 'signup-page',
+        user:req.session.user
+    })
+    }
+    catch(error){
+        console.error('Error:', error);
+        //res.status(500).json({ error: 'Hubo un error al Recuperar Products.' });    
+        return  res.render('errors', { message: 'Hubo un error al Recuperar Products.' });
+    }
+})
+
 
 router.get('/passwordreset', (req, res) => {
     const data = {

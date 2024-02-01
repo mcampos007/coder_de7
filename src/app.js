@@ -9,7 +9,7 @@ import { logger } from './utils/logger.js';
 import viewsRouter from './routes/views.router.js';
 
 //import usersRouter from './routes/users.routes.js';
-//import sessionRouter from "./routes/sessions.routes.js";
+import sessionRouter from "./routes/sessions.routes.js";
 import jwtRouter from "./routes/jwt.routes.js";
 
 //import productfsRouter from "./routes/productsfs.routes.js";
@@ -117,7 +117,7 @@ app.use("/api/carts", cartsRouter);
 app.use("/api/messages", messageRouter);
 
 //Definicion de rutas para login y register
-//app.use('/api/sessions', sessionRouter);
+app.use('/api/sessions', sessionRouter);
 app.use('/api/jwt', jwtRouter);
 
 
