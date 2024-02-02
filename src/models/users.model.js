@@ -24,6 +24,10 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
+    cart: {
+        type: Schema.Types.ObjectId,
+        ref: 'Cart'
+      },
     loggedBy: {
     type: String,
     required: false,

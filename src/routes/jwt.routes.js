@@ -62,48 +62,58 @@ router.post('/login', async(req, res) => {
     const {email, password } = req.body;
     console.log(email);
     console.log(password);
+    let user = {}
     try {
-        const user = await usersDao.getUserbyEmail(email);
-        console.log("Usuario encontrado para el login");
-        console.log(user);
-
+        if (email ==='adminCoder@coder.com' || password ==='adminCod3r123'){
+             user = {
+                name: `Administrador`,
+                email: email,
+                age: 0,
+                role:"Admin"
+            }
+        }else {
+                user = await usersDao.getUserbyEmail(email);
+                console.log("Usuario encontrado para el login");
+                console.log(user);
+            }
         if(!user){
             console.warn(`User doesn't exist with username:${email}`);
             return res.status(204).send({ status: "Not found", error: "usuario no encontrado con el email:"+email});
         }
+        if (email ==='adminCoder@coder.com' || password ==='adminCod3r123'){
 
-        if (!isValidPassword(user, password)){
-            console.warn("Invalid credentials for user: " +email);
-            return res.status(401).send({status:"error", error:"Invalid credentials"});
-        }
+        }else{
+            if (!isValidPassword(user, password)){
+                console.warn("Invalid credentials for user: " +email);
+                return res.status(401).send({status:"error", error:"Invalid credentials"});
+            }}
         const tokenUser = {
             name: `${user.first_name} ${user.last_name}`,
             email: user.email,
             edad: user.age,
             role: user.role
         }
-        // IMplementamos jwt
+            // IMplementamos jwt
         const access_token = generateJWToken(tokenUser);
         console.log("Access_token");
         console.log(access_token);
     
-        // 1ro usando localStorage
-        //res.send({message:"Login successfull" , jwt:acces_token});
-
-        // 2do con Cookies
+            // 1ro usando localStorage
+            //res.send({message:"Login successfull" , jwt:acces_token});
+    
+            // 2do con Cookies
         res.cookie('jwtCookieToken', access_token,
             {
                 maxAge: 60000,
                 httpOnly: true //No se expone la cookie
-               // httpOnly: false //Si se expone la cookie
+                // httpOnly: false //Si se expone la cookie
             }
-
         )
         res.status(200).send({ message: "Login success!!" })
-    }catch(error){
-        console.error(error);
-        return res.status(500).send({status:"error", error: "Error interno de la aplicacion"});
-    }
+        }catch(error){
+            console.error(error);
+            return res.status(500).send({status:"error", error: "Error interno de la aplicacion"});
+        }
         
 } );
 //Login del usuario con passport

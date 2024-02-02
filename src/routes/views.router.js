@@ -4,7 +4,7 @@ import session from "express-session";
 import userModel from "../routes/users.routes.js"
 import usersDao from "../daos/dbManager/users.dao.js";
 import productsDao from "../daos/dbManager/products.dao.js";
-import { authToken } from "../utils.js";
+import { authToken, passportCall, authorization } from "../utils.js";
 import passport from "passport";
 
 
@@ -27,21 +27,12 @@ router.use(cookieParser('CoderS3cr3tC0d3'))
 //router.get('/ingresar', (req, res) => {
 // Cabiado para el entregable    
 router.get('/', (req, res) => {
-    
-    /* if (req.session.user){
-        return   res.redirect('/products');
-     }else{
-        
-     }
-     */
     const data = {
         title: 'Signup-page',
         bodyClass: 'signup-page' // Puedes cambiar esto dinámicamente según tus necesidades
     }; 
+    //console.log("voy a renderizar login");
     res.render('login', data);
-
-    
-    
 });
 
 /* router.get('/home', (req, res) => {
@@ -67,8 +58,8 @@ router.get('/', (req, res) => {
     }
 }); */
 
-
-router.get('/profile',  passport.authenticate('jwt', {session: false}), (req, res) => {
+//passport.authenticate('jwt', {session: false})
+router.get('/profile', passportCall('current') , authorization('user'), (req, res) => {
    // console.log("datos de la session");
    // console.log(req.session.user);
    // if (!req.session.user){
@@ -114,7 +105,7 @@ router.get('/register', (req, res) => {
 });
 
 //Ejmplo de llamado a la ruta get para productos con jwt
-router.get('/products',  passport.authenticate('jwt', {session: false}), async (req, res) => {
+router.get('/products',  passport.authenticate('current', {session: false}), async (req, res) => {
     try {
         const parametros  = {};
         const products = await productsDao.getAllProducts(parametros);

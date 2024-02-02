@@ -14,7 +14,7 @@ const ExtractJWT = jwtStrategy.ExtractJwt;
 
 const initializePassport = () => {
     //Estrategia de obtener Token JWT por Cookie:
-    passport.use('jwt', new JwtStrategy(
+    passport.use('current', new JwtStrategy(
         {
             jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
             secretOrKey: PRIVATE_KEY
@@ -92,7 +92,7 @@ const initializePassport = () => {
                     // password //se encriptara despues...
                     password: createHash(password),
                     loggedBy: 'form',
-                    role:"user"
+                    //role:"user"
                 }
                 const result = await userSevice.createUser(user);
                 console.log(result);
